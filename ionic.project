@@ -1,0 +1,12 @@
+{
+  "name": "MyPurchases",
+  "app_id": "5e44d8a5",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
+}
