@@ -1,0 +1,35 @@
+<ion-view view-title="{{sample.name}}">
+	<ion-content class="padding-vertical">
+		<ion-list class="padding-vertical">
+			<ion-toggle ng-model="sample.enable" ng-change="setEnable()">
+				Активувати шаблон
+			</ion-toggle>
+			<div class="item item-divider">
+				Список закупок
+			</div>
+
+			<ion-item ng-repeat="ware in sample.goods" type="item-text-wrap">
+				<div class="row row-no-padding">
+					<div class="col col-60">
+						{{ware.name}} <span ng-if="ware.count > 1">[{{ware.count}}]</span>
+					</div>
+					<div class="col col-40 text-right">
+						{{ware.amount * (ware.count > 1 ? ware.count : 1) | currency:''}} грн.
+					</div>
+				</div>
+			</ion-item>
+
+			<div ng-hide="sample.goods.length" class="text-center empty-search padding-top">Список порожній</div>
+
+			<div class="padding">
+				<div class="button-bar">
+					<a class="button button-block button-outline button-positive"
+					   ui-sref="tab.sample_add-edit({sampleId: sample.id })">Редагувати</a>
+					<a class="button button-block button-outline button-assertive"
+					   ng-click="remove()">Видалити</a>
+				</div>
+			</div>
+		</ion-list>
+
+	</ion-content>
+</ion-view>

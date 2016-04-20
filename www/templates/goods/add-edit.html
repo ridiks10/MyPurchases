@@ -1,0 +1,24 @@
+<ion-view view-title={{title}}>
+	<ion-content class="padding-vertical">
+		<ion-list class="padding-vertical">
+			<label class="item item-input item-stacked-label">
+				<span class="input-label positive">Назва товара:</span>
+				<input type="text" placeholder="Введіть назву" ng-model="ware.name">
+			</label>
+			<label class="item item-input item-stacked-label">
+				<span class="input-label positive">Ціна:</span>
+				<input type="number" placeholder="Введіть ціну" ng-model="ware.amount">
+			</label>
+			<label class="item item-input item-stacked-label" ng-if="showInputCount">
+				<span class="input-label positive">Кількість:</span>
+				<input type="number" ng-model="ware.count">
+			</label>
+		</ion-list>
+		<div class="padding">
+			<div class="button-bar">
+				<a class="button button-block button-outline button-positive" ng-click="save()">Зберегти</a>
+				<a class="button button-block button-outline button-royal" ng-click="save(true)">Додати</a>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

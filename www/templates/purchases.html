@@ -1,0 +1,38 @@
+<ion-view view-title="Мої Покупки" ng-class="{'view-content-center' : !sample.enable}">
+	<ion-content class="padding-vertical">
+
+		<div class="empty-list" ng-if="!sample.enable">
+			<i class="icon ion-alert-circled"></i>
+			<p class="padding-bottom">Список покупок порожній</p>
+		</div>
+
+		<div ng-if="sample.enable">
+			<ion-list>
+				<label class="item item-input item-stable">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="Пошук" ng-model="search">
+				</label>
+				<ion-checkbox ng-model="select[$index]" ng-repeat="ware in sample.goods| filter:search as filtered"
+							  ng-true-value="{{ware.amount * (ware.count > 1 ? ware.count : 1) }}" ng-click="sum()">
+					<div class="row row-no-padding">
+						<div class="col col-60">
+							{{ware.name}} <span ng-if="ware.count > 1">[{{ware.count}}]</span>
+						</div>
+						<div class="col col-40 text-right">
+							{{ware.amount * (ware.count > 1 ? ware.count : 1) | currency:''}} грн.
+						</div>
+					</div>
+				</ion-checkbox>
+				<p ng-hide="filtered.length" class="padding-vertical text-center empty-search">Товарів немає</p>
+				<div class="item item-divider">
+					<div class="row row-no-padding">
+						<div class="col">Сума до оплати:</div>
+						<div class="col text-right"><span>{{all_sum | currency:''}} грн.</span></div>
+					</div>
+				</div>
+			</ion-list>
+			<a class="button button-full button-outline button-positive" ng-click="close()">Завершити покупки</a>
+		</div>
+		</div>
+	</ion-content>
+</ion-view>

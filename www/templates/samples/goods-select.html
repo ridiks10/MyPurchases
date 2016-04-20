@@ -1,0 +1,22 @@
+<ion-view view-title="Список товарів">
+	<ion-content class="padding-vertical">
+		<ion-list>
+			<label class="item item-input item-stable">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Пошук" ng-model="search">
+			</label>
+			<ion-checkbox ng-model="select[$index]" ng-repeat="ware in goods| filter:search as filtered" ng-true-value="{{ware}}">
+				<div class="row row-no-padding">
+					<div class="col col-60">{{ware.name}}</div>
+					<div class="col col-40 text-right">{{ware.amount | currency:''}} грн.</div>
+				</div>
+			</ion-checkbox>
+			<p ng-hide="filtered.length" class="padding-vertical text-center empty-search">Товарів немає</p>
+		</ion-list>
+		<div class="padding">
+			<div class="button-bar">
+				<a class="button button-block button-outline button-positive" ng-click="add()">Додати</a>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
