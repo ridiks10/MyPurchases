@@ -1,62 +1,23 @@
 angular.module('starter.services', [])
-
-    .factory('Samples', function () {
-        var samples = [{
-            name: 'Сільпо',
-            goods: [
-                {
-                    name: 'Риба',
-                    amount: 15.55
-                },
-                {
-                    name: 'Кілька',
-                    amount: 15.55,
-                    count: 2
-                }
-            ]
-        }, {
-            name: 'Базар',
-            goods: [
-                {
-                    name: 'Таранька',
-                    amount: 20.00
-                },
-                {
-                    name: 'Картошка',
-                    amount: 18.55
-                }
-            ]
-        }];
-
-        return {
+    // сервіс для роботи з шаблонами
+    .factory('Samples', function (DataFactory) {
+         return {
             all: function () {
-                return samples;
+                return DataFactory.getData('samples');
             },
-            remove: function (sampleId) {
-                samples.splice(sampleId, 1);
+            getId: function (sampleId) {
+                return this.all()[sampleId];
             },
-            get: function (sampleId) {
-                return samples[sampleId];
-            },
-            'add': function (sample) {
-                samples.unshift(sample);
-            },
-            save: function () {
-                console.log(samples);
-            },
-            add_mare: function (sampleId, mare) {
-                this.get(sampleId).goods.unshift(mare);
-            },
-            get_mare: function (sampleId, mareId) {
-                return this.get(sampleId).goods[mareId];
-            },
-            remove_mare: function (sampleId, mareId) {
-                this.get(sampleId).goods.splice(mareId, 1);
+            save: function (samples) {
+                DataFactory.setData('samples', samples);
             },
             get_enable: function () {
                 var sample = null;
-                angular.forEach(this.all(), function (item) {
-                    if (item.enable) sample = item;
+                angular.forEach(this.all(), function (item, id) {
+                    if (item.enable){
+                        sample = item;
+                        sample.id = id;
+                    }
                 });
                 return sample;
             },
@@ -69,38 +30,63 @@ angular.module('starter.services', [])
             }
         };
     })
-    .factory('Goods', function () {
-            var goods = [{
-                name: 'Хліб',
-                amount: 8.85
-            }, {
-                name: 'Ковбаса',
-                amount: 85.90
-            }, {
-                name: 'Майонез',
-                amount: 6.30
-            }, {
-                name: 'Пиво',
-                amount: 10.45
-            }];
-
-            return {
-                all: function () {
-                    return goods;
-                },
-                remove: function (wareId) {
-                    goods.splice(wareId, 1);
-                },
-                get: function (wareId) {
-                    if (!wareId) return null;
-                    return goods[wareId];
-                },
-                'add': function (ware) {
-                    goods.unshift(ware);
-                },
-                save: function () {
-                    console.log(goods);
+    // сервіс для роботи з товарами
+    .factory('Goods', function (DataFactory) {
+        return {
+            all: function () {
+                if(localStorage.getItem("goods")) return DataFactory.getData('goods');
+                // Товари за замовчення
+                return [{
+                    name: 'Хліб',
+                    amount: 8.85
+                }, {
+                    name: 'Молоко',
+                    amount: 18.20
+                }, {
+                    name: 'Чай',
+                    amount: 6.30
+                }];
+            },
+            save: function (goods) {
+                DataFactory.setData('goods', goods);
+            }
+        };
+    })
+    // сервіс для роботи з локальним сховищем
+    .factory('DataFactory', function() {
+        return {
+            // метод збереження даних в локальному сховищі
+            setData: function (nameData, data) {
+                localStorage.setItem(nameData, angular.toJson(data));
+            },
+            // метод повернення даних з локального сховища
+            getData: function(nameData) {
+                var dataStore = localStorage.getItem(nameData);
+                if (dataStore != null && dataStore != '' && angular.isArray(angular.fromJson(dataStore))) {
+                    return angular.fromJson(dataStore);
                 }
+                return [];
+            }
+        };
+    })
+    // сервіс для роботи з модальними вікнами
+    .service('ModalService', function ($ionicModal, $rootScope) {
+        var init = function (tpl, $scope) {
+            var promise;
+            $scope = $scope || $rootScope.$new();
+            promise = $ionicModal.fromTemplateUrl('templates/modals/' + tpl, {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function (modal) {
+                $scope.modal = modal;
+                return modal;
+            });
+            $scope.openModal = function () {
+                $scope.modal.show();
             };
+            return promise;
+        };
+        return {
+            init: init
         }
-    );
+    });

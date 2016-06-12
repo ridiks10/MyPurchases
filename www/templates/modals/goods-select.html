@@ -1,0 +1,24 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-positive" ng-switch="action">
+		<h1 class="title">Список товарів</h1>
+		<button class="button button-icon icon ion-close" ng-click="leaveModal()"></button>
+	</ion-header-bar>
+	<ion-content class="padding-vertical">
+		<ion-list>
+			<label class="item item-input item-stable">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Пошук" ng-model="search">
+			</label>
+			<button class="button button-full  button-positive button-outline" ng-click="addGoodsSample()">Додати</button>
+			<ion-checkbox ng-model="selected[$index]" ng-repeat="ware in goods| filter:search as filtered"
+						  ng-true-value="{{ware}}">
+				<div class="row row-no-padding">
+					<div class="col col-60">{{ware.name}}</div>
+					<div class="col col-40 text-right">{{ware.amount | currency:''}} грн.</div>
+				</div>
+			</ion-checkbox>
+
+			<p ng-hide="filtered.length" class="padding-vertical text-center empty-search">Товарів немає</p>
+		</ion-list>
+	</ion-content>
+</ion-modal-view>

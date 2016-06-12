@@ -1,0 +1,37 @@
+<ion-modal-view>
+	<ion-header-bar class="bar bar-header bar-positive">
+		<h1 class="title">
+			<span ng-if="action == 'add'">Новий товар</span>
+			<span ng-if="action == 'edit'">Редагування товара</span>
+		</h1>
+		<button class="button button-icon icon ion-close" ng-click="leaveModal()"></button>
+	</ion-header-bar>
+	<ion-content class="padding-vertical">
+		<form name="form">
+			<ion-list class="padding-vertical">
+				<label class="item item-input item-stacked-label">
+					<span class="input-label positive">Назва товара:</span>
+					<input type="text" placeholder="Введіть назву" id="name" name="name" ng-model="name" required/>
+				</label>
+				<label class="item item-input item-stacked-label">
+					<span class="input-label positive">Ціна:</span>
+					<input type="number" placeholder="Введіть ціну" name="amount" ng-model="amount" required/>
+				</label>
+				<label class="item item-input item-stacked-label" ng-if="showInputCount">
+					<span class="input-label positive">Кількість:</span>
+					<input type="number" name="count" ng-model="count">
+				</label>
+			</ion-list>
+		</form>
+		<div class="padding" ng-switch="action" ng-init="saveEmpty(form)">
+			<div class="button-bar" ng-switch-when="add">
+				<a class="button button-block button-outline button-positive" ng-disabled="form.$invalid"
+				   ng-click="addWare(form)">Додати</a>
+				<a class="button button-block button-outline button-royal" ng-disabled="form.$invalid"
+				   ng-click="addWare(form, true)">Новий товар</a>
+			</div>
+			<a class="button button-block button-outline button-positive" ng-switch-when="edit"
+			   ng-disabled="form.$invalid" ng-click="saveWare(wareId ,form)">Зберегти</a>
+		</div>
+	</ion-content>
+</ion-modal-view>

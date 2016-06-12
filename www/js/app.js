@@ -1,7 +1,17 @@
-angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'ionic.service.core', 'ionic.service.analytics', 'starter.controllers', 'starter.services'])
 
-    .run(function ($ionicPlatform) {
+    .run(function ($ionicPlatform, $ionicAnalytics) {
         $ionicPlatform.ready(function () {
+            $ionicAnalytics.register();
+            //var deploy = new Ionic.Deploy();
+            //if(deploy) {
+            //    deploy.check().then(function(hasUpdate) {
+            //        alert(hasUpdate);
+            //        if(hasUpdate){}
+            //    }, function(err) {
+            //        console.error('Ionic Deploy: Unable to check for updates', err);
+            //    });
+            //}
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
             if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -15,7 +25,6 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
             }
         });
     })
-
     .config(function ($stateProvider, $urlRouterProvider) {
         $stateProvider
         // setup an abstract state for the tabs directive
@@ -41,7 +50,7 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
                 url: '/samples',
                 views: {
                     'tab-samples': {
-                        templateUrl: 'templates/samples/main.html',
+                        templateUrl: 'templates/samples.html',
                         controller: 'SamplesCtrl'
                     }
                 }
@@ -52,39 +61,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
                 url: '/samples:sampleId',
                 views: {
                     'tab-samples': {
-                        templateUrl: 'templates/samples/detail.html',
+                        templateUrl: 'templates/sample-detail.html',
                         controller: 'SampleDetailCtrl'
-                    }
-                }
-            })
-
-            .state('tab.sample_add-edit', {
-                url: '/samples:sampleId',
-                views: {
-                    'tab-samples': {
-                        templateUrl: 'templates/samples/add-edit.html',
-                        controller: 'SampleFormCtrl'
-                    }
-                }
-            })
-
-            .state('tab.sample_ware-add-edit', {
-                url: '/samples:sampleId/ware:wareId',
-                views: {
-                    'tab-samples': {
-                        templateUrl: 'templates/goods/add-edit.html',
-                        controller: 'SampleWareFormCtrl'
-                    }
-                }
-            })
-
-            /* Виборка товарів */
-            .state('tab.sample_goods-select', {
-                url: '/samples:sampleId',
-                views: {
-                    'tab-samples': {
-                        templateUrl: 'templates/samples/goods-select.html',
-                        controller: 'SampleGoodsSelectCtrl'
                     }
                 }
             })
@@ -94,18 +72,8 @@ angular.module('starter', ['ionic', 'ionic.service.core', 'starter.controllers',
                 url: '/goods',
                 views: {
                     'tab-goods': {
-                        templateUrl: 'templates/goods/main.html',
+                        templateUrl: 'templates/goods.html',
                         controller: 'GoodsCtrl'
-                    }
-                }
-            })
-
-            .state('tab.goods_add-edit', {
-                url: '/goods:wareId',
-                views: {
-                    'tab-goods': {
-                        templateUrl: 'templates/goods/add-edit.html',
-                        controller: 'WareFormCtrl'
                     }
                 }
             });

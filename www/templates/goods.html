@@ -1,0 +1,18 @@
+<ion-view view-title="Товари">
+	<ion-content>
+		<button class="button button-royal button-outline button-full" ng-click="modal_addWare()">Додати товар</button>
+		<ion-list>
+			<ion-item ng-repeat="ware in goods" type="item-text-wrap">
+				<div class="row row-no-padding">
+					<div class="col col-60">{{ware.name}}</div>
+					<div class="col col-50 text-right">{{ware.amount | currency:''}} грн.</div>
+				</div>
+				<ion-option-button class="button-clear button-positive" ng-click="modal_editWare($index)">
+					Ред.
+				</ion-option-button>
+				<ion-option-button class="button-icon icon ion-trash-a" ng-click="remove($index)"></ion-option-button>
+			</ion-item>
+			<p ng-hide="goods.length" class="padding-vertical text-center empty-search">Товарів немає</p>
+		</ion-list>
+	</ion-content>
+</ion-view>

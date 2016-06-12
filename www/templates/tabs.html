@@ -10,7 +10,7 @@ navigation history that also transitions its views in and out.
 	</ion-tab>
 
 	<!-- Шаблони Tab -->
-	<ion-tab title="Шаблони" icon-off="ion-ios-paper-outline" icon-on="ion-ios-paper" ui-sref="tab.samples">
+	<ion-tab title="Шаблони" icon-off="ion-ios-paper-outline" icon-on="ion-ios-paper" ui-sref="tab.samples" on-select="main.getSamples(this)">
 		<ion-nav-view name="tab-samples"></ion-nav-view>
 	</ion-tab>
 
